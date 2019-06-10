@@ -18,11 +18,13 @@ public class Base {
   public Properties prop;
 
   @BeforeClass
-  private void propertiesFileSetup() {
+  public void propertiesFileSetup() {
     FileReader fis;
     prop = new Properties();
     try {
-      String path = System.getProperty("user.dir")+"\\config\\test.properties";
+      String path = System.getProperty("user.dir") +
+              "\\Final_Assignment_git\\config\\test.properties";
+      System.out.println(path);
       fis = new FileReader(path);
       prop.load(fis);
       System.out.println(path + " was loaded as a properties file.");
