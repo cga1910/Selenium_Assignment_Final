@@ -1,7 +1,7 @@
 package base;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -19,14 +19,12 @@ public class Base {
 
   @BeforeClass
   public void propertiesFileSetup() {
-    FileReader fis;
+    FileReader fileReader;
     prop = new Properties();
     try {
-      String path = System.getProperty("user.dir") +
-              "\\Final_Assignment_git\\config\\test.properties";
-      System.out.println(path);
-      fis = new FileReader(path);
-      prop.load(fis);
+      String path = System.getProperty("user.dir") + "\\Final_Assignment_git\\resources\\test.properties";
+      fileReader = new FileReader(path);
+      prop.load(fileReader);
       System.out.println(path + " was loaded as a properties file.");
     } catch (java.io.IOException e) {
       System.out.println(e.getMessage());
@@ -37,9 +35,8 @@ public class Base {
   public void openBrowser(String browserName) {
     driver = null;
     if (browserName.equalsIgnoreCase("Firefox")) {
-      String path = "c:\\Program Files\\Mozilla Firefox 58\\firefox.exe";
-      System.setProperty("webdriver.firefox.bin", path);
-      path = System.getProperty(FirefoxDriver.SystemProperty.BROWSER_BINARY);
+      System.setProperty("webdriver.firefox.bin", "c:\\Program Files\\Mozilla Firefox 58\\firefox.exe");
+      String path = System.getProperty(FirefoxDriver.SystemProperty.BROWSER_BINARY);
       System.out.println("Using binary: " + path);
       driver = new FirefoxDriver();
     } else if (browserName.equalsIgnoreCase("Chrome")) {
@@ -53,22 +50,23 @@ public class Base {
     }
     driver.manage().window().maximize();
     driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-    driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+    driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
   }
 
   public void navigate(String url) {
     driver.get(url);
   }
 
-  public void typeText(String xPath, String s) {
-    driver.findElement(By.xpath(xPath)).sendKeys(s);
-  }
-
-  public void click(String xPath) {
-    driver.findElement(By.xpath(xPath)).click();
+  public void click(WebElement element) {
+    element.click();
   }
 
   public void closeBrowser() {
     driver.quit();
   }
+
+  public static long getTime() {
+    return System.currentTimeMillis();
+  }
+
 }
