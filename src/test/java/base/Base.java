@@ -27,7 +27,6 @@ public class Base {
       prop.load(fileReader);
       System.out.println(path + " was loaded as a properties file.");
     } catch (java.io.IOException e) {
-      System.out.println(e.getMessage());
       e.printStackTrace();
     }
   }
